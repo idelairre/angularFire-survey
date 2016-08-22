@@ -1,112 +1,132 @@
 <div class="container">
-    <h2 class="modal-title">Survey Questions</h2>
-    <hr>
-    <div class="panel panel-default" ng-repeat="question in questions track by $index">
-        <div class="panel-heading" editable-text="question.name" onaftersave="questions.$save(question)">Question: "{{ question.name }}"<a class="pull-right" ng-click="remove(question)"><span class="glyphicon glyphicon-remove"></span></a></div>
-        <div class="panel-body">
-            <span uib-dropdown on-toggle="toggled(open)">
-          <a href uib-dropdown-toggle>
-            type: {{ question.type }}
-          </a>
-          <ul class="dropdown-menu" uib-dropdown-menu>
-            <li ng-repeat="choice in items">
-              <a href ng-click="question.type = choice; questions.$save(question); question.options = []; questions.$save(question)">{{choice}}</a>
-            </li>
-          </ul>
-        </span>
-            <font ng-if="qustion.scale"> scale: {{ question.scale }}</font>
+    <div class="container">
+        <h2 class="modal-title">Answer types</h2>
+        <hr>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Add label..." ng-model="label.title">
+            <span class="input-group-btn"><button class="btn btn-default" type="button" ng-click="addLabel(label)">add</button></span>
         </div>
-        <div class="panel-footer" ng-if="question.type === 'radio' || question.type === 'checkbox'">Options:<a class="pull-right" ng-click="addOption(question.name)"><span class="glyphicon glyphicon-plus"></span></a></div>
-        <ul class="list-group" ng-if="question.type === 'radio' || question.type === 'checkbox'">
-            <li class="list-group-item" ng-repeat="option in question.options track by $index" editable-text="option" onaftersave="saveOption(question, $index, $data)">{{ $index + 1 }}: {{ option }}</li>
-        </ul>
-    </div>
-    <hr>
-    <h2 class="modal-title">Label Answers</h2>
-    <hr>
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Add label..." ng-model="label.title">
-        <span class="input-group-btn"><button class="btn btn-default" type="button" ng-click="addLabel(label)">add</button></span>
-    </div>
-    <!-- /input-group -->
-    <br>
-    <div class="panel panel-default">
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="label in labels">{{ $index }}: {{ label.title }}<a class="pull-right" ng-click="removeLabel(label)"><span class="glyphicon glyphicon-remove"></span></a></li>
-        </ul>
-    </div>
-    <hr>
-    <h2 class="modal-title">Result Pictures</h2>
-    <hr>
-    <div class="media" ng-repeat="label in labels">
-        <div class="media-left media-middle">
-            <a href="#">
-                <img class="media-object" height="100" width="100" ng-src="{{ label.img || 'http://rs901.pbsrc.com/albums/ac215/KenkoKimche/Random%20Gif/Pyong%20Gifs/Wave.gif~c200' }}" alt="...">
-            </a>
+        <!-- /input-group -->
+        <br>
+        <div class="panel panel-default">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="label in labels" editable-text="label.title" onaftersave="labels.$save(label)">{{ $index }}: {{ label.title }}<a class="pull-right" ng-click="removeLabel(label)"><span class="glyphicon glyphicon-remove"></span></a></li>
+            </ul>
         </div>
-        <div class="media-body">
-            <h4 class="media-heading">{{ label.title }}</h4>
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Add image src..." ng-model="label.img">
-                <span class="input-group-btn"><button class="btn btn-default" type="button" ng-click="editLabel(label)">set</button></span>
+        <hr>
+        <h2 class="modal-title">Answer Pictures</h2>
+        <hr>
+        <div class="media" ng-repeat="label in labels">
+            <div class="media-left media-middle">
+                <a href="#">
+                    <img class="media-object" height="100" width="100" ng-src="{{ label.img || 'http://rs901.pbsrc.com/albums/ac215/KenkoKimche/Random%20Gif/Pyong%20Gifs/Wave.gif~c200' }}" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{ label.title }}</h4>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Add image src..." ng-model="label.img">
+                    <span class="input-group-btn"><button class="btn btn-default" type="button" ng-click="editLabel(label)">set</button></span>
+                </div>
             </div>
         </div>
     </div>
-    <hr>
-    <h2 class="modal-title">Add Questions</h2>
-    <hr>
-    <!-- input box -->
-    <div class="form-group">
-        <label>Question Name</label>
-        <input type="text" class="form-control" name="name" ng-model="questionData.name">
+    <hr ng-if="questions.length > 0">
+    <div class="container" ng-if="questions.length > 0">
+        <h2 class="modal-title">Survey Questions</h2>
+        <hr>
+        <div class="panel panel-default" ng-repeat="question in questions track by $index">
+            <div class="panel-heading" editable-text="question.name" onaftersave="questions.$save(question)">Question: "{{ question.name }}"<a class="pull-right" ng-click="remove(question)"><span class="glyphicon glyphicon-remove"></span></a></div>
+            <div class="panel-body">
+                <span uib-dropdown>
+              <a href uib-dropdown-toggle>
+                type: {{ question.type }}
+              </a>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li ng-repeat="choice in items">
+                  <a href ng-click="question.type = choice; questions.$save(question); question.options = []; questions.$save(question)">{{ choice }}</a>
+                </li>
+              </ul>
+            </span>
+                <font ng-if="qustion.scale"> scale: {{ question.scale }}</font>
+            </div>
+            <div class="panel-footer" ng-if="question.type === 'radio' || question.type === 'checkbox'">Options:<a class="pull-right" ng-click="addOption(question.name)"><span class="glyphicon glyphicon-plus"></span></a></div>
+            <ul class="list-group" ng-if="question.type === 'radio' || question.type === 'checkbox'">
+                <li class="list-group-item" ng-repeat="option in question.options track by $index"><font editable-text="option.name" onaftersave="saveOption(question, $index, $data)">{{ $index + 1 }}: {{ option.name }}</font>
+                    <span class="badge" uib-dropdown>
+                  <a href uib-dropdown-toggle style="text-decoration: none; color: white">
+                    {{ option.label || 'click to set answer type' }}
+                  </a>
+                  <ul class="dropdown-menu" uib-dropdown-menu>
+                    <li ng-repeat="label in labels">
+                      <a href ng-click="option.label = label.title; questions.$save(question)">{{ label.title }}</a>
+                    </li>
+                  </ul>
+                </span>
+                </li>
+            </ul>
+        </div>
     </div>
-    <fieldset>
-        <label>Question Type</label>
-        <div class="radio">
-            <label>
-                <input type="radio" name="optionsRadios" value="text" ng-model="questionData.type">text input (short answer)
-            </label>
+    <hr>
+    <div class="container">
+        <h2 class="modal-title">Add Questions</h2>
+        <hr>
+        <!-- input box -->
+        <div class="form-group">
+            <label>Question Name</label>
+            <input type="text" class="form-control" name="name" ng-model="questionData.name">
         </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="optionsRadios" value="textbox" ng-model="questionData.type">text box (long answer)
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="optionsRadios" value="checkbox" ng-model="questionData.type">checkboxes (multiple choices/multiple answers)
-            </label>
-        </div>
-        <div class="form-group" ng-if="questionData.type == 'checkbox'">
-            <label>number of options</label>
-            <input type="number" class="form-control" placeholder="from 0 to ?" ng-model="options.number" min="2">
-        </div>
-        <div class="form-group" ng-repeat="i in getNumber(options.number) track by $index" ng-if="questionData.type == 'checkbox'">
-            <label>option {{ $index + 1 }} name</label>
-            <input type="text" class="form-control" placeholder="option name" ng-model="questionData.options[$index]">
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="optionsRadios" value="radio" ng-model="questionData.type">radio buttions (multiple choices/single answer)
-            </label>
-        </div>
-        <div class="form-group" ng-if="questionData.type == 'radio'">
-            <label>number of options</label>
-            <input type="number" class="form-control" placeholder="from 0 to ?" ng-model="options.number" min="2">
-        </div>
-        <div class="form-group" ng-repeat="i in getNumber(options.number) track by $index" ng-if="questionData.type == 'radio' && questionData.options">
-            <label>option {{ $index + 1 }} name</label>
-            <input type="text" class="form-control" placeholder="option name" ng-model="questionData.options[$index]">
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="optionsRadios" value="rating" ng-model="questionData.type">rating/scale
-            </label>
-        </div>
-        <div class="form-group" ng-if="questionData.type == 'rating'">
-            <label>rating scale</label>
-            <input type="number" class="form-control" placeholder="from 0 to ?" ng-model="questionData.scale" min="0">
-        </div>
-    </fieldset>
-    <button type="button" class="btn btn-primary" id="addButton" data-loading-text="Sending..." ng-click="addQuestions()">Add question</button>
+        <fieldset>
+            <label>Question Type</label>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" value="text" ng-model="questionData.type">text input (short answer)
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" value="textbox" ng-model="questionData.type">text box (long answer)
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" value="checkbox" ng-model="questionData.type">checkboxes (multiple choices/multiple answers)
+                </label>
+            </div>
+            <div class="form-group" ng-if="questionData.type == 'checkbox'">
+                <label>number of options</label>
+                <input type="number" class="form-control" placeholder="from 0 to ?" ng-model="options.number" min="2">
+            </div>
+            <div class="form-group" ng-repeat="i in getNumber(options.number) track by $index" ng-if="questionData.type == 'checkbox'">
+                <label>option {{ $index + 1 }} name</label>
+                <input type="text" class="form-control" placeholder="option name" ng-model="questionData.options[$index]">
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" value="radio" ng-model="questionData.type">radio buttions (multiple choices/single answer)
+                </label>
+            </div>
+            <div class="form-group" ng-if="questionData.type == 'radio'">
+                <label>number of options</label>
+                <input type="number" class="form-control" placeholder="from 0 to ?" ng-model="options.number" min="2">
+            </div>
+            <div class="form-group" ng-repeat="i in getNumber(options.number) track by $index" ng-if="questionData.type == 'radio' && questionData.options">
+                <label>option {{ $index + 1 }} name</label>
+                <input type="text" class="form-control" placeholder="option name" ng-model="questionData.options[$index].name">
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" value="rating" ng-model="questionData.type">rating/scale
+                </label>
+            </div>
+            <div class="form-group" ng-if="questionData.type == 'rating'">
+                <label>rating scale</label>
+                <input type="number" class="form-control" placeholder="from 0 to ?" ng-model="questionData.scale" min="0">
+            </div>
+        </fieldset>
+        <button type="button" class="btn btn-primary" id="addButton" data-loading-text="Sending..." ng-click="addQuestions()">Add question</button>
+    </div>
+    <hr>
+    <button type="button" class="btn btn-primary btn-lg pull-right" ui-sref="main">Done</button>
+    <br>
 </div>

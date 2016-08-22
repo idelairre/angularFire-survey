@@ -20,7 +20,7 @@
                 </div>
                 <div ng-repeat="option in question.options" name="{{ question.name }}" ng-if="question.options && question.type == 'radio'">
                     <label class="checkbox-inline">
-                        <input type="radio" id="inlineRadio{{ $index }}" name="{{ question.name }}" value="{{ option }}" ng-model="formData[question.name]" ng-true-value="'{{ option }}'"> {{ option }}
+                        <input type="radio" id="inlineRadio{{ $index }}" name="{{ question.name }}" value="{{ option }}" ng-model="formData[question.name]" ng-true-value="'{{ option }}'"> {{ option.name }}
                     </label>
                 </div>
                 <div class="form-group" ng-if="question.type == 'rating'">

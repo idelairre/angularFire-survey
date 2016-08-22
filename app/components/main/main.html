@@ -1,18 +1,16 @@
 <div class="container">
-    <h2>AngularFire Survey</h2>
+    <div class="jumbotron">
+        <h1>AngularFire Survey</h1>
+        <hr>
+        <ul>
+            <li>An open source online survey tool.</li>
+            <li>Based on AngularFire, AngularJS, Bootstrap and Firebase.</li>
+            <li>Easy to set up without worrying about server code.</li>
+        </ul>
 
-    <hr>
-
-    <ul>
-        <li>An open source online survey tool.</li>
-        <li>Based on AngularFire, AngularJS, Bootstrap and Firebase.</li>
-        <li>Easy to set up without worrying about server code.</li>
-    </ul>
-
-    <hr>
-
-    <button type="button" class="btn btn-primary pull-right" ng-click="takeSurvey()" ng-hide="successInfo">Take the Survey</button>
-
+        <button type="button" class="btn btn-primary btn-lg pull-right" ng-click="takeSurvey()" ng-hide="successInfo">Take the Survey</button>
+        <br>
+    </div>
     <!-- success information/alert -->
     <div class="alert alert-success alert-dismissable" ng-show="successInfo">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

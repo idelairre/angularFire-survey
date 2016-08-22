@@ -35,18 +35,16 @@ const edit = angular.module('edit', []).component('editComponent', {
             number: undefined
         };
 
-        $scope.getNumber = function(num) {
+        $scope.getNumber = num => {
             return new Array(num);
         };
 
-        $scope.remove = function(item) {
-            $scope.questions.$remove(item).then(function(questions) {
-                questions.key() == item.$id;
-            });
+        $scope.remove = item => {
+            $scope.questions.$remove(item);
         };
 
-        $scope.addQuestions = function() {
-            $scope.questions.$add($scope.questionData).then(function() {
+        $scope.addQuestions = () => {
+            $scope.questions.$add($scope.questionData).then(() => {
                 $scope.questionData = {
                     name: '',
                     options: []
@@ -83,7 +81,7 @@ const edit = angular.module('edit', []).component('editComponent', {
             isopen: false
         };
 
-        $scope.toggleDropdown = function($event) {
+        $scope.toggleDropdown = $event => {
             $event.preventDefault();
             $event.stopPropagation();
             $scope.status.isopen = !$scope.status.isopen;

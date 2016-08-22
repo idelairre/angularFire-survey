@@ -22,9 +22,10 @@ const result = angular.module('result', []).component('resultComponent', {
             for (const key in answers) {
                 for (const _key in questions) {
                     const question = questions[_key];
+                    const answer = JSON.parse(answers[key]).name;
                     if (question.name === key) {
                         question.options.forEach(opt => {
-                            if (opt.name === answers[key]) {
+                            if (opt.name === answer) {
                                 opt.checked = true;
                             }
                         });
@@ -33,25 +34,24 @@ const result = angular.module('result', []).component('resultComponent', {
             }
         }
 
+        const createTally = () => {
+          const tally = {};
+          $scope.labels.forEach(label => {
+            tally[label.title] = 0;
+          });
+          return tally;
+        }
+
         const tallyAnswers = parsedQs => {
-            let tally = {};
+            let tally = createTally();
             for (const key in parsedQs) {
-                const {
-                    options
-                } = parsedQs[key];
-                if (typeof options !== 'undefined') {
-                    options.forEach((opt, i) => {
-                        if (opt.checked) {
-                            if (!tally[i]) {
-                                tally[i] = 1;
-                            } else {
-                                tally[i] += 1;
-                            }
-                        }
-                    });
+                const { options } = parsedQs[key];
+                for (const _key in options) {
+                  if (options[_key].checked) {
+                    tally[options[_key].label] += 1;
+                  }
                 }
             }
-
             return tally;
         }
 
@@ -64,34 +64,28 @@ const result = angular.module('result', []).component('resultComponent', {
             return percentages;
         }
 
-        const showHighest = (percentages) => {
+        const showHighest = percentages => {
+            const labels = $scope.labels.map(label => label.title);
             let highest = 0;
-            let highestKey = '';
-            let highestLabel = '';
+            let highestIndex = 0;
+            let highestTitle = '';
             for (const key in percentages) {
                 const entry = percentages[key];
                 if (entry > highest) {
                     highest = entry;
-                    highestKey = key;
-                    highestLabel = $scope.labels[key].title;
+                    highestTitle = key;
+                    highestIndex = labels.indexOf(key);
                 }
             }
             return {
                 highest,
-                highestKey,
-                highestLabel
+                title: highestTitle,
+                index: highestIndex
             };
         }
 
-        // $scope.labels.$loaded().then(() => {
-        //   $scope.labels = $scope.labels.map(label => {
-        //     return label.title;
-        //   });
-        // });
-
         $scope.headings.$loaded().then(() => {
             const parsedQuestions = {};
-
             for (const key in $scope.headings) {
                 if (typeof $scope.headings[key] !== 'function') {
                     parsedQuestions[key] = $scope.headings[key];
@@ -99,7 +93,8 @@ const result = angular.module('result', []).component('resultComponent', {
                     delete parsedQuestions[key].$priority;
                     parsedQuestions[key].options = parsedQuestions[key].options.map(opt => {
                         return {
-                            name: opt,
+                            label: opt.label,
+                            name: opt.name,
                             checked: false
                         }
                     });
@@ -114,7 +109,7 @@ const result = angular.module('result', []).component('resultComponent', {
                         delete survey.$id;
                         delete survey.$priority;
 
-                        parseAnswers(survey, parsedQuestions)
+                        parseAnswers(survey, parsedQuestions);
 
                         $scope.results = parsedQuestions;
 

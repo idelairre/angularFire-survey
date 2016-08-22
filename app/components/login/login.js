@@ -25,13 +25,12 @@ const login = angular.module('login', []).component('loginComponent', {
                 // reset button loading state
                 $scope.loginText = 'Sign in successful';
                 setTimeout($state.go('edit'), 700);
-            }).catch(function(error) {
+            }).catch(error => {
                 // catch and display error if login fails
                 $scope.error = error;
                 // reset button loading state
                 $scope.loginText = 'Sign in';
             });
-
         };
     }
 })

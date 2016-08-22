@@ -1,8 +1,10 @@
 <div class="container">
   <h2>Survey Result</h2>
   <hr>
-  <h3>You got... {{ labels[highest.highestKey].title }}</h3>
-  <img ng-src="{{ labels[highest.highestKey].img }}" />
+  <h3>You got...</h3>
+  <h1 style="text-align: center">"{{ highest.title }}"</h1>
+  <br>
+  <img class="center-block" ng-src="{{ labels[highest.index].img }}" />
 
   <!-- <table class="table table-hover">
       <tr>
