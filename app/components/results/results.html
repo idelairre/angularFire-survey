@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>Survey Result</h2>
+  <hr>
+  <h3>You got... {{ labels[highest.highestKey].title }}</h3>
+  <img ng-src="{{ labels[highest.highestKey].img }}" />
+
+  <!-- <table class="table table-hover">
+      <tr>
+          <th ng-repeat="header in headings">{{ header.name }}</th>
+      </tr>
+      <tr ng-repeat="result in allResults | orderBy: '-timestamp'">
+          <td ng-repeat="header in headings">{{ header.options.indexOf(result[header.name]) }} : {{result[header.name]}}</td>
+      </tr>
+  </table> -->
+
+  <h1>{{ user }}'s answers:</h1>
+
+  <table class="table table-hover">
+      <tr>
+          <th ng-repeat="label in labels">{{ label.title }}</th>
+      </tr>
+      <tr>
+          <td ng-repeat="(key, val) in percentages">% {{ val }}</td>
+      </tr>
+  </table>
+</div>

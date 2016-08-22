@@ -1,0 +1,46 @@
+/* app css stylesheet */
+
+.container .credit {
+   margin: 16px 0;
+}
+/* star rating */
+
+.rating {
+   color: #3276b1;
+   margin: 0;
+   padding: 0;
+}
+
+ul.rating {
+   display: inline-block;
+}
+
+.rating li {
+   list-style-type: none;
+   display: inline-block;
+   padding: 1px;
+   text-align: center;
+   font-weight: bold;
+   cursor: pointer;
+   font-size: 2em;
+}
+
+.axis path,
+.axis line {
+   fill: none;
+   stroke: #777;
+   shape-rendering: crispEdges;
+}
+
+.axis text {
+   font-family: 'Arial';
+   font-size: 13px;
+}
+
+.tick {
+   stroke-dasharray: 1, 2;
+}
+
+.bar {
+   fill: FireBrick;
+}
