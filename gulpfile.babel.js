@@ -1,6 +1,7 @@
 'use strict';
 
 import gulp     from 'gulp';
+import ghPages  from 'gulp-gh-pages';
 import webpack  from 'webpack';
 import path     from 'path';
 import sync     from 'run-sequence';
@@ -63,6 +64,11 @@ gulp.task('webpack', ['clean'], (cb) => {
 
     cb();
   });
+});
+
+gulp.task('deploy', function() {
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
 });
 
 gulp.task('serve', () => {
