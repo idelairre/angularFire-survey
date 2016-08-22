@@ -1,0 +1,16 @@
+<!doctype html> <html lang="en" ng-app="pollingApp"> <head> <meta charset="utf-8"> <title></title> <link rel="stylesheet" href="styles/vendor.9deacd36.css"> <link rel="stylesheet" href="styles/main.e7077941.css"> </head> <body class="ng-cloak"> <!-- Navigation --> <nav class="navbar navbar-default" role="navigation"> <div class="container"> <div class="navbar-header"> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="#/">AngularFire Survey</a> </div> <div class="collapse navbar-collapse navbar-ex1-collapse"> <ul class="nav navbar-nav"> <li><a href="#/survey">Take the Survey</a> </li> <li ng-show="authData"><a href="#/edit">Edit the Survey</a> </li> <!--
+               <li ng-show="authData"><a href="#/result" disabled>Survey Result</a>
+               </li>
+--> </ul> <ul class="nav navbar-nav navbar-right"> <li ng-hide="authData" class="active"><a href="#/login">Login</a> </li> <li ng-show="authData"><a href ng-click="logout()">Logout</a> </li> </ul> </div> <!-- /.navbar-collapse --> </div> <!-- /.container --> </nav> <div class="container"> <!-- Main content --> <div ng-view></div> </div> <script src="scripts/vendor.4005096d.js"></script> <script src="scripts/scripts.b80c6385.js"></script> <script>$(function () {
+         InitChart();
+      });
+
+      function InitChart() {
+         var vis = d3.select("#svgVisualize");
+         var xRange = d3.scale.linear().range([40, 400]).domain([0, 100]);
+         var yRange = d3.scale.linear().range([40, 400]).domain([0, 100]);
+         var xAxis = d3.svg.axis().scale(xRange);
+         var yAxis = d3.svg.axis().scale(yRange);
+         vis.append("svg:g").call(xAxis);
+         vis.append("svg:g").call(yAxis);
+      }</script> </body> </html>
