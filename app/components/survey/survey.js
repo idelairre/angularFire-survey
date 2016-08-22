@@ -6,6 +6,7 @@ import constants from '../../constants/constants';
 const survey = angular.module('survey', [])
     .controller('surveyController', ['$scope', '$state', '$firebaseArray', '$uibModalInstance',
         function($scope, $state, $firebaseArray, $uibModalInstance) {
+          /* @ngInject */
 
             const ref = firebase.database().ref().child('survey');
             const questions = firebase.database().ref().child('questions');

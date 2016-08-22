@@ -8,7 +8,7 @@ const btnRadio = angular.module('pollingApp.directives', ['ngRoute'])
  * @copyright Angular-UI team 2014
  */
 
-.directive('btnRadio', [function(buttonConfig) {
+.directive('btnRadio', [function() {
     var activeClass = 'active';
     var toggleEvent = 'click';
 

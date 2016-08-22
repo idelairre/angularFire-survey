@@ -3,6 +3,7 @@ import angular from 'angular';
 const nav = angular.module('nav', ['firebase']).component('navComponent', {
   template: require('./nav.html'),
   controller: function($scope, Auth) {
+    /* @ngInject */
     $scope.authData = Auth.$getAuth();
 
     Auth.$onAuthStateChanged(firebaseUser => {

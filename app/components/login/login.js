@@ -3,7 +3,7 @@ import angular from 'angular';
 const login = angular.module('login', []).component('loginComponent', {
     template: require('./login.html'),
     controller: function($scope, $state, Auth) {
-
+        /* @ngInject */
         $scope.loginText = 'Sign in';
 
         /**
