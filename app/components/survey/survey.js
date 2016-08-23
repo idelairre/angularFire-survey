@@ -31,14 +31,14 @@ const survey = angular.module('survey', [])
              * Update rating score to object.
              * @param {Number} rating - Star rating score.
              */
-            $scope.updateRating = function(rating) {
+            $scope.updateRating = rating => {
                 $scope.formData.rating = rating;
             };
 
             /**
              * Add survey to Firebase database.
              */
-            $scope.addSurvey = function() {
+            $scope.addSurvey = () => {
                 if ($scope.formData) {
                     // change button to loading state
                     localStorage.setItem('lastUser', $scope.formData.applicant);
@@ -46,7 +46,7 @@ const survey = angular.module('survey', [])
                     $scope.buttonText = 'loading...';
 
                     // push data to Firebase
-                    $scope.surveys.$add($scope.formData).then(function() {
+                    $scope.surveys.$add($scope.formData).then(() => {
                         // show success information/alert
                         $scope.successInfo = true;
                         $scope.buttonText = 'Send result';
@@ -57,12 +57,12 @@ const survey = angular.module('survey', [])
                 }
             };
 
-            $scope.ok = function() {
+            $scope.ok = () => {
                 $uibModalInstance.close();
                 $state.go('result');
             };
 
-            $scope.cancel = function() {
+            $scope.cancel = () => {
                 $uibModalInstance.dismiss('cancel');
             };
         }

@@ -1,0 +1,18 @@
+<div class="container">
+  <h2 class="modal-title">Answer Pictures</h2>
+  <hr>
+  <div class="media" ng-repeat="label in labels">
+      <div class="media-left media-middle">
+          <a>
+              <img class="media-object" height="100" width="100" ng-src="{{ label.img || 'http://rs901.pbsrc.com/albums/ac215/KenkoKimche/Random%20Gif/Pyong%20Gifs/Wave.gif~c200' }}" alt="...">
+          </a>
+      </div>
+      <div class="media-body">
+          <h4 class="media-heading">{{ label.title }}</h4>
+          <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add image src..." ng-model="label.img">
+              <span class="input-group-btn"><button class="btn btn-default" type="button" ng-click="editLabel(label)">set</button></span>
+          </div>
+      </div>
+  </div>
+</div>

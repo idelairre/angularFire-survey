@@ -18,16 +18,16 @@ angular.module('pollingApp', ['xeditable', 'ngAnimate', 'ngSanitize', 'ui.bootst
 .run(['$rootScope', '$location', 'Auth',
   function($rootScope, $location, Auth) {
     // any time auth status updates, add auth data to rootScope
-    Auth.$onAuthStateChanged(function(authData) {
+    Auth.$onAuthStateChanged(authData => {
       $rootScope.authData = authData;
     });
 
-    $rootScope.logout = function() {
+    $rootScope.logout = () => {
       Auth.$signOut();
       $location.path('/survey');
     };
 
-    $rootScope.$on('$routeChangeError', function(event, next, previous, error) {
+    $rootScope.$on('$routeChangeError', ($event, next, previous, error) => {
       if (error === 'AUTH_REQUIRED') {
           $location.path('/survey');
       }

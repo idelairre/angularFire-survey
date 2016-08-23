@@ -1,0 +1,35 @@
+<div class="container" ng-if="questions.length > 0">
+    <h2 class="modal-title">Survey Questions</h2>
+    <hr>
+    <div class="panel panel-default" ng-repeat="question in questions track by $index">
+        <div class="panel-heading" editable-text="question.name" onaftersave="questions.$save(question)">Question: "{{ question.name }}"<a class="pull-right" ng-click="remove(question)"><span class="glyphicon glyphicon-remove"></span></a></div>
+        <div class="panel-body">
+            <span uib-dropdown>
+          <a href uib-dropdown-toggle>
+            type: {{ question.type }}
+          </a>
+          <ul class="dropdown-menu" uib-dropdown-menu>
+            <li ng-repeat="choice in items">
+              <a href ng-click="question.type = choice; questions.$save(question); question.options = []; questions.$save(question)">{{ choice }}</a>
+            </li>
+          </ul>
+        </span>
+            <font ng-if="qustion.scale"> scale: {{ question.scale }}</font>
+        </div>
+        <div class="panel-footer" ng-if="question.type === 'radio' || question.type === 'checkbox'">Options:<a class="pull-right" ng-click="addOption(question.name)"><span class="glyphicon glyphicon-plus"></span></a></div>
+        <ul class="list-group" ng-if="question.type === 'radio' || question.type === 'checkbox'">
+            <li class="list-group-item" ng-repeat="option in question.options track by $index"><font editable-text="option.name" onaftersave="saveOption(question, $index, $data)">{{ $index + 1 }}: {{ option.name }}</font>
+                <span class="badge" uib-dropdown>
+              <a href uib-dropdown-toggle style="text-decoration: none; color: white">
+                {{ option.label || 'click to set answer type' }}
+              </a>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li ng-repeat="label in labels">
+                  <a href ng-click="option.label = label.title; questions.$save(question)">{{ label.title }}</a>
+                </li>
+              </ul>
+            </span>
+            </li>
+        </ul>
+    </div>
+</div>

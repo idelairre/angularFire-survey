@@ -1,0 +1,16 @@
+<div class="container">
+    <h2 class="modal-title">Answer types</h2>
+    <hr>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Add answer type..." ng-model="label.title">
+        <span class="input-group-btn"><button class="btn btn-default" type="button" ng-click="addLabel(label)">add</button></span>
+    </div>
+    <!-- /input-group -->
+    <br>
+    <div class="panel panel-default">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="label in labels" editable-text="label.title" onaftersave="labels.$save(label)">{{ $index }}: {{ label.title }}<a class="pull-right" ng-click="removeLabel(label)"><span class="glyphicon glyphicon-remove"></span></a></li>
+        </ul>
+    </div>
+    <hr>
+</div>

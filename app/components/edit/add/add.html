@@ -1,0 +1,58 @@
+<div class="container">
+    <h2 class="modal-title">Add Questions</h2>
+    <hr>
+    <!-- input box -->
+    <div class="form-group">
+        <label>Question Name</label>
+        <input type="text" class="form-control" name="name" ng-model="questionData.name">
+    </div>
+    <fieldset>
+        <label>Question Type</label>
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" value="text" ng-model="questionData.type">text input (short answer)
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" value="textbox" ng-model="questionData.type">text box (long answer)
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" value="checkbox" ng-model="questionData.type">checkboxes (multiple choices/multiple answers)
+            </label>
+        </div>
+        <div class="form-group" ng-if="questionData.type == 'checkbox'">
+            <label>number of options</label>
+            <input type="number" class="form-control" placeholder="from 0 to ?" ng-model="options.number" min="2">
+        </div>
+        <div class="form-group" ng-repeat="i in getNumber(options.number) track by $index" ng-if="questionData.type == 'checkbox'">
+            <label>option {{ $index + 1 }} name</label>
+            <input type="text" class="form-control" placeholder="option name" ng-model="questionData.options[$index]">
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" value="radio" ng-model="questionData.type">radio buttions (multiple choices/single answer)
+            </label>
+        </div>
+        <div class="form-group" ng-if="questionData.type == 'radio'">
+            <label>number of options</label>
+            <input type="number" class="form-control" placeholder="from 0 to ?" ng-model="options.number" min="2">
+        </div>
+        <div class="form-group" ng-repeat="i in getNumber(options.number) track by $index" ng-if="questionData.type == 'radio' && questionData.options">
+            <label>option {{ $index + 1 }} name</label>
+            <input type="text" class="form-control" placeholder="option name" ng-model="questionData.options[$index].name">
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" value="rating" ng-model="questionData.type">rating/scale
+            </label>
+        </div>
+        <div class="form-group" ng-if="questionData.type == 'rating'">
+            <label>rating scale</label>
+            <input type="number" class="form-control" placeholder="from 0 to ?" ng-model="questionData.scale" min="0">
+        </div>
+    </fieldset>
+    <button type="button" class="btn btn-primary" id="addButton" data-loading-text="Sending..." ng-click="addQuestions()">Add question</button>
+</div>
