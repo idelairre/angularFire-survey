@@ -23,7 +23,7 @@ const result = angular.module('result', []).component('resultComponent', {
                 for (const _key in questions) {
                     const question = questions[_key];
                     const answer = JSON.parse(answers[key]).name;
-                    if (question.name === key) {
+                    if (question.name.match(key)) {
                         question.options.forEach(opt => {
                             if (opt.name === answer) {
                                 opt.checked = true;
@@ -70,7 +70,7 @@ const result = angular.module('result', []).component('resultComponent', {
             let highestIndex = 0;
             let highestTitle = '';
             for (const key in percentages) {
-                const entry = percentages[key];
+                const entry = parseInt(percentages[key]);
                 if (entry > highest) {
                     highest = entry;
                     highestTitle = key;

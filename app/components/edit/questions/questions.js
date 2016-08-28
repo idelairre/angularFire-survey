@@ -20,15 +20,17 @@ const questions = angular.module('edit.questions', []).component('questionsCompo
                 if (!q.options) {
                     q.options = [];
                     $scope.questions.$save(q);
+                } else if (!Array.isArray(q.options)) {
+                  q.options = Array.from(q.options);
                 }
-                q.options.push('click to edit question');
+                q.options.push({ name: 'click to edit question' });
                 $scope.questions.$save(q);
             }
         });
     }
 
     $scope.saveOption = (question, index, data) => {
-        ref.child(question.$id).child(`options/${index}`).set(data);
+      $scope.questions.$save(question);
     }
 
     $scope.items = [

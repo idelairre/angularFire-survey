@@ -18,6 +18,7 @@ const main = angular.module('main', ['ui.bootstrap', 'nav', 'survey']).component
                 controller: 'surveyController',
                 size: 'lg'
             });
+            modalInstance.result.then(function() {}, function() {});
         };
     }
 })

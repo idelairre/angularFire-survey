@@ -10,8 +10,6 @@ const login = angular.module('login', []).component('loginComponent', {
          * Login into app and redirect to result page
          */
         $scope.login = () => {
-            console.log($scope.email);
-            console.log($scope.password);
             $scope.authData = null;
             $scope.error = null;
 

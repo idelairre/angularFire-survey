@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import angular from 'angular';
 import firebase from 'firebase';
 import constants from '../../constants/constants';
@@ -6,7 +5,22 @@ import constants from '../../constants/constants';
 const survey = angular.module('survey', [])
     .controller('surveyController', ['$scope', '$state', '$firebaseArray', '$uibModalInstance',
         function($scope, $state, $firebaseArray, $uibModalInstance) {
-          /* @ngInject */
+            /* @ngInject */
+
+            const VALID_FIREBASE_KEY = /[^a-zA-Z0-9 ]/g;
+
+            const formatKeys = formData => {
+              for (const key in formData) {
+                if ({}.hasOwnProperty.call(formData, key)) {
+                  if (key.match(VALID_FIREBASE_KEY)) {
+                    const newKey = key.replace(VALID_FIREBASE_KEY, '');
+                    formData[newKey] = formData[key];
+                    delete formData[key];
+                  }
+                }
+              }
+              return formData;
+            }
 
             const ref = firebase.database().ref().child('survey');
             const questions = firebase.database().ref().child('questions');
@@ -43,17 +57,16 @@ const survey = angular.module('survey', [])
                     // change button to loading state
                     localStorage.setItem('lastUser', $scope.formData.applicant);
 
-                    $scope.buttonText = 'loading...';
+                    const formData = formatKeys($scope.formData);
 
+                    $scope.buttonText = 'loading...';
                     // push data to Firebase
-                    $scope.surveys.$add($scope.formData).then(() => {
+                    $scope.surveys.$add(formData).then(() => {
                         // show success information/alert
                         $scope.successInfo = true;
                         $scope.buttonText = 'Send result';
                         setTimeout($scope.ok, 300);
-                    });
-                } else {
-                    alert('Please complete all questions before submitting.');
+                    }).catch(err => console.error(err));
                 }
             };
 
