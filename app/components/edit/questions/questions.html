@@ -1,5 +1,6 @@
 <div class="container" ng-if="questions.length > 0">
     <h2 class="modal-title">Survey Questions</h2>
+    <small>Total: {{ questions.length + 1 }}</small>
     <hr>
     <div class="panel panel-default" ng-repeat="question in questions track by $index">
         <div class="panel-heading" editable-text="question.name" onaftersave="questions.$save(question)">Question: "{{ question.name }}"<a class="pull-right" ng-click="remove(question)"><span class="glyphicon glyphicon-remove"></span></a></div>

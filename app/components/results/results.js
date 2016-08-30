@@ -23,7 +23,7 @@ const result = angular.module('result', []).component('resultComponent', {
                 for (const _key in questions) {
                     const question = questions[_key];
                     const answer = JSON.parse(answers[key]).name;
-                    if (question.name.match(key)) {
+                    if (question.name.replace(/\W/g, '').match(key.replace(/\W/g, ''))) {
                         question.options.forEach(opt => {
                             if (opt.name === answer) {
                                 opt.checked = true;
@@ -35,11 +35,11 @@ const result = angular.module('result', []).component('resultComponent', {
         }
 
         const createTally = () => {
-          const tally = {};
-          $scope.labels.forEach(label => {
-            tally[label.title] = 0;
-          });
-          return tally;
+            const tally = {};
+            $scope.labels.forEach(label => {
+                tally[label.title] = 0;
+            });
+            return tally;
         }
 
         const tallyAnswers = parsedQs => {
@@ -47,9 +47,9 @@ const result = angular.module('result', []).component('resultComponent', {
             for (const key in parsedQs) {
                 const { options } = parsedQs[key];
                 for (const _key in options) {
-                  if (options[_key].checked) {
-                    tally[options[_key].label] += 1;
-                  }
+                    if (options[_key].checked) {
+                        tally[options[_key].label] += 1;
+                    }
                 }
             }
             return tally;
@@ -102,34 +102,31 @@ const result = angular.module('result', []).component('resultComponent', {
             }
 
             $scope.allResults.$loaded().then(() => {
+                const userSurveys = [];
                 $scope.allResults.forEach(survey => {
                     if (survey.applicant === $scope.user) {
-                        delete survey.applicant;
-                        delete survey.timestamp;
-                        delete survey.$id;
-                        delete survey.$priority;
-
-                        parseAnswers(survey, parsedQuestions);
-
-                        $scope.results = parsedQuestions;
-
-                        $scope.tally = tallyAnswers(parsedQuestions);
-
-                        $scope.percentages = calculatePercent($scope.tally, $scope.headings.length);
-
-                        $scope.highest = showHighest($scope.percentages);
+                        userSurveys.push(survey);
                     }
                 });
+
+                const survey = userSurveys.pop();
+
+                delete survey.applicant;
+                delete survey.timestamp;
+                delete survey.$id;
+                delete survey.$priority;
+
+                parseAnswers(survey, parsedQuestions);
+
+                $scope.results = parsedQuestions;
+
+                $scope.tally = tallyAnswers(parsedQuestions);
+
+                $scope.percentages = calculatePercent($scope.tally, $scope.headings.length);
+
+                $scope.highest = showHighest($scope.percentages);
             });
         });
-
-        $scope.showIndex = (item) => {
-            for (let i = 0; i < item.options.length; i += 1) {
-                if (item.options[i].checked) {
-                    return i;
-                }
-            }
-        }
     }
 })
 
